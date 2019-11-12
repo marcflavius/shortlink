@@ -1,45 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router';
-import { Meteor } from 'meteor/meteor';
+import React      from 'react'
+import { Link }   from 'react-router'
+import { Meteor } from 'meteor/meteor'
 
 export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: ''
-    };
-  }
-  onSubmit(e) {
-    e.preventDefault();
+	constructor(props) {
+		super(props)
+		this.state = {
+			error: '',
+		}
+	}
 
-    let email = this.refs.email.value.trim();
-    let password = this.refs.password.value.trim();
+	onSubmit(e) {
+		e.preventDefault()
 
-    Meteor.loginWithPassword({email}, password, (err) => {
-      if (err) {
-        this.setState({error: 'Unable to login. Check email and password.'});
-      } else {
-        this.setState({error: ''});
-      }
-    });
-  }
-  render() {
-    return (
-      <div className="boxed-view">
-        <div className="boxed-view__box">
-          <h1>Short Lnk</h1>
+		let email = this.refs.email.value.trim()
+		let password = this.refs.password.value.trim()
 
-          {this.state.error ? <p>{this.state.error}</p> : undefined}
+		Meteor.loginWithPassword({email}, password, (err) => {
+			if (err) {
+				this.setState({error: 'Unable to login. Check email and password.'})
+			} else {
+				this.setState({error: ''})
+			}
+		})
+	}
 
-          <form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
-            <input type="email" ref="email" name="email" placeholder="Email"/>
-            <input type="password" ref="password" name="password" placeholder="Password"/>
-            <button className="button">Login</button>
-          </form>
+	render() {
+		return (<div className="boxed-view">
+			<div className="boxed-view__box">
+				<h1>Project keeper</h1>
+				<h5 style={{
+					color: 'gray',
+					fontWeight: 400,
+					margin: 5,
+				}}>Marc Flavius
+				</h5>
 
-          <Link to="/signup">Have an account?</Link>
-        </div>
-      </div>
-    );
-  }
+				{this.state.error
+					? <p>{this.state.error}</p>
+					: undefined}
+
+				<form onSubmit={this.onSubmit.bind(this)} noValidate className="boxed-view__form">
+					<input type="email" ref="email" name="email" placeholder="Email" />
+					<input type="password" ref="password" name="password" placeholder="Password" />
+					<button className="button">Connexion</button>
+				</form>
+
+				<Link to="/signup">Avez vous un compte?</Link>
+			</div>
+		</div>)
+	}
 }
